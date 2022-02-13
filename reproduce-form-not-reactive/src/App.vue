@@ -1,21 +1,44 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <el-form :model="formData">
+      <el-form-item prop="test">
+        <el-table :data="tableData">
+          <el-table-column>
+              <div>value: {{ isOnModification }}</div>
+          </el-table-column>
+        </el-table>
+      </el-form-item>
+    </el-form>
+    <div> {{ isOnModification }} </div>
+    <el-button @click="isOnModification = !isOnModification">
+      change
+    </el-button>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { defineComponent, ref } from '@vue/composition-api'
 
-export default Vue.extend({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-});
+export default defineComponent({
+  setup() {
+    const isOnModification = ref(false)
+
+  const formData = { test: '' }
+
+    const tableData = [
+      { test: '' }
+    ]
+
+    return {
+      isOnModification,
+      formData,
+      tableData
+    }
+  },
+})
 </script>
+
 
 <style>
 #app {
@@ -25,5 +48,8 @@ export default Vue.extend({
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.hidden-columns {
+  display: none;
 }
 </style>
